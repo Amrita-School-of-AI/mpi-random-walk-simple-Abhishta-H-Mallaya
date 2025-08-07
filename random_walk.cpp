@@ -72,10 +72,10 @@ void walker_process()
     // 5. If the walk is finished (either out of bounds or max_steps reached):
     //    a. Print a message including the keyword "finished". For example:
     //       "Rank X: Walker finished in Y steps."
-     std::cout<< "Finished: It took "<< step <<" step " <<" for "<< world_rank <<" to complete."<< std::endl;
+    std::cout << "Rank " << world_rank << ": Walker finished in " << step << " steps." << std::endl;
     //    b. Send an integer message to the controller (rank 0) to signal completion.
     //    c. Break the loop.
-     int msg=5;
+     int msg=0;
      MPI_Send(&msg,1,MPI_INT,0,0,MPI_COMM_WORLD);
 }
 
@@ -93,7 +93,7 @@ void controller_process()
 
     // 3. Use MPI_Recv to wait for a message. Use MPI_ANY_SOURCE to accept
     //    a message from any walker that finishes.
-    std::cout<<"controller: all "<< n_walker <<" walkers have finished."<<std::endl;
+    std::cout << "Controller: All " << n_walker << " walkers have finished." << std::endl;
     // 4. After receiving messages from all walkers, print a final summary message.
     //    For example: "Controller: All X walkers have finished."
 }
